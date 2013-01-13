@@ -314,7 +314,7 @@
 			content += '<ul>';
 			// Iterate through each definition
 			for ( var i = 0; i < widget.content[POS].length; i++ ) {
-				content += '<li>' + jQuery.trim(widget.content[POS][i]['def'])
+				content += '<li class="vocab_def">' + jQuery.trim(widget.content[POS][i]['def'])
 					+ '</li>';
 			}
 			content += '</ul>';
