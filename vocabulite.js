@@ -1,6 +1,6 @@
 (function () {
 	var jQuery;
-	var cssPath = 'http://someday.heliohost.org/vocabulite/vocabulite.css';
+	var cssPath = 'http://vocabulite.googlecode.com/git/vocabulite.css';
 
 	// Widget objects
 	var widget = {};
