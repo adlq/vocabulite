@@ -48,10 +48,12 @@
 	}
 
 	var drawWidget = function() {
+		// Draw the widget itself
 		$( 'body' ).append("<span id='widget'></span>");
 		var w = $( '#widget' );
 		w.css( {
 			'border': '1px solid #000',
+			'z-index': '9999',
 			'width': wWidth + 'px', 
 			'height': wHeight + 'px',
 			'position': 'absolute',
@@ -60,6 +62,8 @@
 			'font-family': 'serif, Georgia'
 		} );
 		w.hide();
+
+		// Draw the on/off button
 	}
 
 	var textHighlighter = {};
