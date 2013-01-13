@@ -11,7 +11,7 @@
 	 */
 	var apiKey = '0f191f643576c490532070f5c310f77af776e4d0abbe3e0c7';
 	var apiUrl = 'http://api.wordnik.com//v4/word.json/';
-	var apiOptions = '/definitions?api_key=' + apiKey;
+	var apiOptions = '/definitions?limit=5&useCanonical=true&api_key=' + apiKey;
 
 	var ajaxReq = {
 		url: apiUrl,
@@ -314,10 +314,7 @@
 			content += '<ul>';
 			// Iterate through each definition
 			for ( var i = 0; i < widget.content[POS].length; i++ ) {
-				content += '<li>' + widget.content[POS][i]['def'] 
-					+ "<span style='background: #000; color: #fff'>(" 
-					+ widget.content[POS][i]['src']
-					+ ')</span>'
+				content += '<li>' + jQuery.trim(widget.content[POS][i]['def'])
 					+ '</li>';
 			}
 			content += '</ul>';
