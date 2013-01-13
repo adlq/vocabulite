@@ -11,6 +11,10 @@
 
 	var wHeight = 200;
 	var wWidth = 200;
+	var wPadding = 10;
+	// Effective measures to correctly position the widget
+	var wEffectiveHeight = wHeight + wPadding;
+	var wEffectiveWidth = wWidth + wPadding;
 
 	if ( window.jQuery === undefined || window.jQuery.fn.jquery !== '1.7.2' ) {
 		var script_tag = document.createElement('script');
@@ -35,7 +39,8 @@
 	}
 
 	function scriptLoadHandler() {
-		jQuery = window.jQuery.noConflict(true);
+		jQuery.noConflict();
+		//jQuery = window.jQuery.noConflict(true);
 		main();
 	}
 
@@ -60,7 +65,7 @@
 			'overflow-y': 'auto',
 			'position': 'absolute',
 			'background': '#fff',
-			'padding': '10px',
+			'padding': wPadding + 'px',
 			'font-family': 'serif, Georgia'
 		} );
 		w.hide();
@@ -107,11 +112,10 @@
 			
 			var scrollTop = jQuery( document ).scrollTop();
 			var scrollLeft = jQuery( document ).scrollLeft();
-			wX = ( window.innerWidth + scrollLeft - event.pageX - wWidth < 0 ?
-					Math.max( event.pageX - wWidth, scrollLeft ) : event.pageX );
-			wY = ( window.innerHeight + scrollTop - event.pageY - wHeight < 0 ? 
-					Math.max( event.pageY - wHeight, scrollTop ) :
-					Math.min( event.pageY, window.innerHeight + scrollTop - wHeight ) );
+			wX = ( window.innerWidth + scrollLeft - event.pageX - wEffectiveWidth < 0 ?
+					Math.max( event.pageX - wEffectiveWidth, scrollLeft ) : event.pageX );
+			wY = ( window.innerHeight + scrollTop - event.pageY - wEffectiveHeight < 0 ? 
+					Math.max( event.pageY - wEffectiveHeight, scrollTop ) : event.pageY );
 			w.css( {
 				'left': wX + 'px',
 				'top': wY + 'px',
