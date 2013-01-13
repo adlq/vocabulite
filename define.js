@@ -35,22 +35,23 @@
 	}
 
 	function scriptLoadHandler() {
+		$myjq = window.jQuery.noConflict();
 		main();
 	}
 
 	function main() {
-		$( document ).ready( function() {
+		$myjq( document ).ready( function() {
 			drawWidget();
 			console.log('Ready!');
-			var s = $( "body" ).children().not( "#widget" );
+			var s = $myjq( "body" ).children().not( "#widget" );
 			s.on( "mouseup.define", event, textHighlighter.mouseup );
 		});
 	}
 
 	var drawWidget = function() {
 		// Draw the widget itself
-		$( 'body' ).append("<span id='widget'></span>");
-		var w = $( '#widget' );
+		$myjq( 'body' ).append("<div id='widget'></div>");
+		var w = $myjq( '#widget' );
 		w.css( {
 			'border': '1px solid #000',
 			'z-index': '9999',
@@ -88,7 +89,7 @@
 
 	textHighlighter.mouseup = function( event ) {
 		var string = preprocessString( textHighlighter.getText().toString() );
-		var w = $( '#widget' );
+		var w = $myjq( '#widget' );
 
 		if ( relevantString( string ) ) {
 			console.log("Selected : " + string);
@@ -98,6 +99,8 @@
 			 * Position the widget, such as there's no
 			 * unecessary scrolling to reveal it.
 			 */
+			console.log("Innerheight: " + window.innerHeight );
+			console.log("eventY: " + event.pageY );
 			wX = ( window.innerWidth - event.pageX - wWidth < 0 ?
 					Math.max( event.pageX - wWidth, 0 ) : event.pageX );
 			wY = ( window.innerHeight - event.pageY - wHeight < 0 ? 
@@ -109,7 +112,7 @@
 
 			// Get the content for the widget
 			ajaxReq.url = generateReqURL( string );
-			$.ajax(ajaxReq);
+			$myjq.ajax(ajaxReq);
 
 			// Show the widget
 			w.show();
@@ -141,7 +144,7 @@
 
 		// Process the highlighted string 
 		string = string.replace( /[^\w\s]|_/g, "").replace( /\s+/g, " "); // Remove punctuation marks
-		string = $.trim( string );
+		string = $myjq.trim( string );
 		string = string.toLowerCase();
 
 		console.log( "Used in ajax request: " + string );
@@ -170,7 +173,7 @@
 	 * on the highlighted word in the widget
 	 */
 	var fillWidget = function( resp ) {
-		var w = $( "#widget");
+		var w = $myjq( "#widget");
 
 		if ( resp.length ) {
 			for ( var i = 0; i < resp.length; i++) {
