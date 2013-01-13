@@ -1,5 +1,5 @@
 #vocabulite_widget {
-	width: 200px;
+	width: 500px;
 	height: 200px;
 	padding: 10px;
 	position: absolute;
@@ -12,7 +12,22 @@
 	overflow-y: auto;
 }
 
+#vocabulite_status {
+	width: 20px;
+	height: 20px;
+	position: fixed;
+	top: 5px;
+	right: 5px;
 
-h1 {
+	border: 1px solid #eee;
+	z-index: 9999;
+
+	font-family: serif, Georgia;
+	background: #fff;
+	text-align: center;
+	font-weight: bold;
+}
+
+.vocab_title {
 	color: red;
 }
