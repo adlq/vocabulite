@@ -35,7 +35,7 @@
 	}
 
 	function scriptLoadHandler() {
-		jQuery = window.jQuery.noConflict();
+		jQuery = window.jQuery.noConflict(true);
 		main();
 	}
 
@@ -100,13 +100,18 @@
 			 * Position the widget, such as there's no
 			 * unecessary scrolling to reveal it.
 			 */
+			
 			console.log("Innerheight: " + window.innerHeight );
 			console.log("eventY: " + event.pageY );
 			console.log("scrollTop: " + jQuery( document ).scrollTop() );
-			wX = ( window.innerWidth - event.pageX - wWidth < 0 ?
-					Math.max( event.pageX - wWidth, 0 ) : event.pageX );
-			wY = ( window.innerHeight - event.pageY - wHeight < 0 ? 
-					Math.max( event.pageY - wHeight, 0 ) : event.pageY );
+			
+			var scrollTop = jQuery( document ).scrollTop();
+			var scrollLeft = jQuery( document ).scrollLeft();
+			wX = ( window.innerWidth + scrollLeft - event.pageX - wWidth < 0 ?
+					Math.max( event.pageX - wWidth, scrollLeft ) : event.pageX );
+			wY = ( window.innerHeight + scrollTop - event.pageY - wHeight < 0 ? 
+					Math.max( event.pageY - wHeight, scrollTop ) :
+					Math.min( event.pageY, window.innerHeight + scrollTop - wHeight ) );
 			w.css( {
 				'left': wX + 'px',
 				'top': wY + 'px',
