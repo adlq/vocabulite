@@ -35,28 +35,29 @@
 	}
 
 	function scriptLoadHandler() {
-		$myjq = window.jQuery.noConflict();
+		jQuery = window.jQuery.noConflict();
 		main();
 	}
 
 	function main() {
-		$myjq( document ).ready( function() {
+		jQuery( document ).ready( function() {
 			drawWidget();
 			console.log('Ready!');
-			var s = $myjq( "body" ).children().not( "#widget" );
+			var s = jQuery( "body" ).children().not( "#widget" );
 			s.on( "mouseup.define", event, textHighlighter.mouseup );
 		});
 	}
 
 	var drawWidget = function() {
 		// Draw the widget itself
-		$myjq( 'body' ).append("<div id='widget'></div>");
-		var w = $myjq( '#widget' );
+		jQuery( 'body' ).append("<div id='widget'></div>");
+		var w = jQuery( '#widget' );
 		w.css( {
 			'border': '1px solid #000',
 			'z-index': '9999',
 			'width': wWidth + 'px', 
 			'height': wHeight + 'px',
+			'overflow-y': 'auto',
 			'position': 'absolute',
 			'background': '#fff',
 			'padding': '10px',
@@ -89,7 +90,7 @@
 
 	textHighlighter.mouseup = function( event ) {
 		var string = preprocessString( textHighlighter.getText().toString() );
-		var w = $myjq( '#widget' );
+		var w = jQuery( '#widget' );
 
 		if ( relevantString( string ) ) {
 			console.log("Selected : " + string);
@@ -101,6 +102,7 @@
 			 */
 			console.log("Innerheight: " + window.innerHeight );
 			console.log("eventY: " + event.pageY );
+			console.log("scrollTop: " + jQuery( document ).scrollTop() );
 			wX = ( window.innerWidth - event.pageX - wWidth < 0 ?
 					Math.max( event.pageX - wWidth, 0 ) : event.pageX );
 			wY = ( window.innerHeight - event.pageY - wHeight < 0 ? 
@@ -112,7 +114,7 @@
 
 			// Get the content for the widget
 			ajaxReq.url = generateReqURL( string );
-			$myjq.ajax(ajaxReq);
+			jQuery.ajax(ajaxReq);
 
 			// Show the widget
 			w.show();
@@ -144,7 +146,7 @@
 
 		// Process the highlighted string 
 		string = string.replace( /[^\w\s]|_/g, "").replace( /\s+/g, " "); // Remove punctuation marks
-		string = $myjq.trim( string );
+		string = jQuery.trim( string );
 		string = string.toLowerCase();
 
 		console.log( "Used in ajax request: " + string );
@@ -173,7 +175,7 @@
 	 * on the highlighted word in the widget
 	 */
 	var fillWidget = function( resp ) {
-		var w = $myjq( "#widget");
+		var w = jQuery( "#widget");
 
 		if ( resp.length ) {
 			for ( var i = 0; i < resp.length; i++) {
