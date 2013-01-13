@@ -7,7 +7,6 @@
 	border: 1px solid black;
 	z-index: 9999;
 
-	font-family: serif, Georgia;
 	background: #fff;
 	overflow-y: auto;
 }
@@ -30,4 +29,9 @@
 
 .vocab_title {
 	color: red;
+}
+
+.vocab_def {
+	color: #000;
+	font-family: serif, Georgia;
 }
