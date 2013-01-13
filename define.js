@@ -8,30 +8,35 @@
 	var apiKey = '0f191f643576c490532070f5c310f77af776e4d0abbe3e0c7';
 	var apiUrl = 'http://api.wordnik.com//v4/word.json/';
 	var apiOptions = '/definitions?limit=5&api_key=' + apiKey;
+	var cssPath = 'vocabulite.css';
 
-	var wHeight = 200;
-	var wWidth = 200;
-	var wPadding = 10;
-	// Effective measures to correctly position the widget
-	var wEffectiveHeight = wHeight + wPadding;
-	var wEffectiveWidth = wWidth + wPadding;
+	// Widget object
+	var widget = {};
 
 	if ( window.jQuery === undefined || window.jQuery.fn.jquery !== '1.7.2' ) {
-		var script_tag = document.createElement('script');
-		script_tag.setAttribute("type", "text/javascript");
-		script_tag.setAttribute("src", 
+		var scriptTag = document.createElement('script');
+		scriptTag.setAttribute("type", "text/javascript");
+		scriptTag.setAttribute("src", 
 			"http://code.jquery.com/jquery-latest.js");
-		if ( script_tag.readyState ) {
-			script_tag.onreadystatechange = function () {
+
+		var cssTag = document.createElement( 'link' );
+		cssTag.setAttribute( 'rel' , 'stylesheet' );
+		cssTag.setAttribute( 'type', 'text/css' );
+		cssTag.setAttribute( 'media', 'screen' );
+		cssTag.setAttribute( 'href' , cssPath );
+
+		if ( scriptTag.readyState && cssTag.readyState ) {
+			scriptTag.onreadystatechange = function () {
 				if ( this.readyState == 'complete' || this.readyState == 'loaded' ) {
 					scriptLoadHandler();
 				}
 			};
 		} else {
-			script_tag.onload = scriptLoadHandler;
+			scriptTag.onload = scriptLoadHandler;
 		}
 
-		( document.getElementsByTagName("head")[0] || document.documentElement ).appendChild(script_tag);
+		( document.getElementsByTagName("head")[0] || document.documentElement ).appendChild(scriptTag);
+		( document.getElementsByTagName("head")[0] || document.documentElement ).appendChild(cssTag);
 
 	} else {
 		jQuery = window.jQuery;
@@ -39,38 +44,38 @@
 	}
 
 	function scriptLoadHandler() {
-		jQuery.noConflict();
-		//jQuery = window.jQuery.noConflict(true);
+		jQuery = window.jQuery.noConflict(true);
 		main();
 	}
 
 	function main() {
 		jQuery( document ).ready( function() {
-			drawWidget();
+
+			var s = jQuery( "body" ).children().not( "#vocabulite_widget" );
+			
+			// If the widget exists, then we clear it
+			var selection = jQuery( '#vocabulite_widget' );
+			if ( selection.length ) {
+				s.off( "mouseup.vocabulite" );
+			} else {
+				drawWidget();
+			}
+
 			console.log('Ready!');
-			var s = jQuery( "body" ).children().not( "#widget" );
-			s.on( "mouseup.define", event, textHighlighter.mouseup );
+			s.on( "mouseup.vocabulite", event, textHighlighter.mouseup );
 		});
 	}
 
 	var drawWidget = function() {
-		// Draw the widget itself
-		jQuery( 'body' ).append("<div id='widget'></div>");
-		var w = jQuery( '#widget' );
-		w.css( {
-			'border': '1px solid #000',
-			'z-index': '9999',
-			'width': wWidth + 'px', 
-			'height': wHeight + 'px',
-			'overflow-y': 'auto',
-			'position': 'absolute',
-			'background': '#fff',
-			'padding': wPadding + 'px',
-			'font-family': 'serif, Georgia'
-		} );
-		w.hide();
 
-		// Draw the on/off button
+		// Draw the widget itself, if it doesn't exist yet
+		jQuery( 'body' ).append( "<div id='vocabulite_widget'></div>" );
+		widget.w = jQuery( '#vocabulite_widget' );
+		widget.w.hide();
+
+		// Outer measures take into account the padding to correctly position the widget
+		widget.realHeight = widget.w.outerHeight();
+		widget.realWidth = widget.w.outerWidth();
 	}
 
 	var textHighlighter = {};
@@ -95,7 +100,6 @@
 
 	textHighlighter.mouseup = function( event ) {
 		var string = preprocessString( textHighlighter.getText().toString() );
-		var w = jQuery( '#widget' );
 
 		if ( relevantString( string ) ) {
 			console.log("Selected : " + string);
@@ -106,19 +110,15 @@
 			 * unecessary scrolling to reveal it.
 			 */
 			
-			console.log("Innerheight: " + window.innerHeight );
-			console.log("eventY: " + event.pageY );
-			console.log("scrollTop: " + jQuery( document ).scrollTop() );
-			
 			var scrollTop = jQuery( document ).scrollTop();
 			var scrollLeft = jQuery( document ).scrollLeft();
-			wX = ( window.innerWidth + scrollLeft - event.pageX - wEffectiveWidth < 0 ?
-					Math.max( event.pageX - wEffectiveWidth, scrollLeft ) : event.pageX );
-			wY = ( window.innerHeight + scrollTop - event.pageY - wEffectiveHeight < 0 ? 
-					Math.max( event.pageY - wEffectiveHeight, scrollTop ) : event.pageY );
-			w.css( {
-				'left': wX + 'px',
-				'top': wY + 'px',
+			widget.x = ( window.innerWidth + scrollLeft - event.pageX - widget.realWidth < 0 ?
+					Math.max( event.pageX - widget.realWidth, scrollLeft ) : event.pageX );
+			widget.y = ( window.innerHeight + scrollTop - event.pageY - widget.realHeight < 0 ? 
+					Math.max( event.pageY - widget.realHeight, scrollTop ) : event.pageY );
+			widget.w.css( {
+				'left': widget.x + 'px',
+				'top': widget.y + 'px',
 			} );
 
 			// Get the content for the widget
@@ -126,13 +126,13 @@
 			jQuery.ajax(ajaxReq);
 
 			// Show the widget
-			w.show();
+			widget.w.show();
 		} else {
 			// Set the widget content to blank
-			w.empty();
+			widget.w.empty();
 
 			// Hide the widget
-			w.hide();
+			widget.w.hide();
 		}
 	}
 
@@ -184,14 +184,13 @@
 	 * on the highlighted word in the widget
 	 */
 	var fillWidget = function( resp ) {
-		var w = jQuery( "#widget");
 
 		if ( resp.length ) {
 			for ( var i = 0; i < resp.length; i++) {
-				w.html( formatContent( resp[i] ) );
+				widget.w.html( formatContent( resp[i] ) );
 			}
 		} else {
-			w.html( "No definition found" );
+			widget.w.html( "No definition found" );
 		}
 	}
 
