@@ -164,7 +164,7 @@
 			console.log( "wouterHeight = " + widget.outerHeight );
 			console.log( "wouterWidth = " + widget.outerWidth );
 			*/
-			console.log( "innerHeight = " + window.innerHeight );
+			console.log( "innerWidth = " + window.innerWidth );
 			console.log( "Padding = " + widget.padding );
 			console.log( "Width = " + widget.w.width() + ", Height = " + widget.w.height() );
 			console.log( "outerWidth = " + widget.w.outerWidth() + ", outerHeight = " + widget.w.outerHeight() );
