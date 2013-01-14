@@ -173,10 +173,10 @@
 					Math.max( event.pageX - widget.outerWidth, scrollLeft ) : event.pageX );
 			widget.y = ( window.innerHeight + scrollTop - event.pageY - widget.outerHeight < 0 ? 
 					Math.max( event.pageY - widget.outerHeight, scrollTop ) : event.pageY );
-			/*
+			
 			console.log( "wx = " + widget.x );
 			console.log( "wy = " + widget.y );
-			*/
+		
 			
 			widget.w.css( {
 				'left': widget.x + 'px',
