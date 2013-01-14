@@ -164,6 +164,10 @@
 			console.log( "wouterHeight = " + widget.outerHeight );
 			console.log( "wouterWidth = " + widget.outerWidth );
 			*/
+			console.log( "innerHeight = " + window.innerHeight );
+			console.log( "Padding = " + widget.padding );
+			console.log( "Width = " + widget.w.width() + ", Height = " + widget.w.height() );
+			console.log( "outerWidth = " + widget.w.outerWidth() + ", outerHeight = " + widget.w.outerHeight() );
 			
 			widget.x = ( window.innerWidth + scrollLeft - event.pageX - widget.outerWidth < 0 ?
 					Math.max( event.pageX - widget.outerWidth, scrollLeft ) : event.pageX );
