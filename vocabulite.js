@@ -121,12 +121,15 @@
 			// by changing CSS property "visibility" because 
 			// apparently it causes less bug (?)
 			widget.padding = parseInt( widget.w.css( 'padding-top' ).replace( 'px', '' ), 10 );
+			console.log( "Padding = " + widget.padding );
 			widget.outerHeight = widget.w.height() + widget.padding;
 			widget.outerWidth = widget.w.width() + widget.padding;
+			console.log( "Width = " + widget.w.width() + ", Height = " + widget.w.height() );
 			widget.outerHeight = widget.w.outerHeight();
 			widget.outerWidth = widget.w.outerWidth();
+			console.log( "outerWidth = " + widget.w.outerWidth() + ", outerHeight = " + widget.w.outerHeight() );
 
-			//hideWidget();
+			hideWidget();
 		}
 
 		// Draw status button
@@ -180,13 +183,13 @@
 			jQuery.ajax(ajaxReq);
 
 			// Show the widget
-			//showWidget();
+			showWidget();
 		} else {
 			// Set the widget content to blank
 			widget.w.empty();
 
 			// Hide the widget
-			//hideWidget();
+			hideWidget();
 		}
 	}
 
