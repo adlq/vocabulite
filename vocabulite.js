@@ -129,7 +129,8 @@
 			widget.outerWidth = widget.w.outerWidth();
 			console.log( "outerWidth = " + widget.w.outerWidth() + ", outerHeight = " + widget.w.outerHeight() );
 
-			hideWidget();
+			//hideWidget();
+			widget.w.hide();
 		}
 
 		// Draw status button
@@ -183,13 +184,15 @@
 			jQuery.ajax(ajaxReq);
 
 			// Show the widget
-			showWidget();
+			//showWidget();
+			widget.w.show();
 		} else {
 			// Set the widget content to blank
 			widget.w.empty();
 
 			// Hide the widget
-			hideWidget();
+			//hideWidget();
+			widget.w.hide();
 		}
 	}
 
