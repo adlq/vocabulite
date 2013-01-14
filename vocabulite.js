@@ -277,14 +277,27 @@
 				 * Otherwise, store definition and sourceDictionary
 				 * in it
 				 */
-				var POS = resp[i].partOfSpeech.toString();
-				if ( !( POS in widget.content ) ) {
-					widget.content[POS] = [];
+				if ( typeof resp[i].partOfSpeech !== 'undefined' ) {
+					var POS = resp[i].partOfSpeech.toString();
+					if ( !( POS in widget.content ) ) {
+						widget.content[POS] = [];
+					}
+					widget.content[POS].push( { 
+						def: resp[i].text, 
+						src: resp[i].sourceDictionary 
+					} );
+				} else {
+					/*
+					 * If there's no part of speech,
+					 * that means that it's a historical
+					 * figure 
+					 */
+					widget.content['Person'] = [];
+					widget.content['Person'].push( {
+						def: resp[i].text,
+						src: resp[i].sourceDictionary
+					} );
 				}
-				widget.content[POS].push( { 
-					def: resp[i].text, 
-					src: resp[i].sourceDictionary 
-				} );
 			}
 
 			/*
