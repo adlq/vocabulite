@@ -123,8 +123,10 @@
 			widget.padding = parseInt( widget.w.css( 'padding-top' ).replace( 'px', '' ), 10 );
 			widget.outerHeight = widget.w.height() + widget.padding;
 			widget.outerWidth = widget.w.width() + widget.padding;
+			widget.outerHeight = widget.w.outerHeight();
+			widget.outerWidth = widget.w.outerWidth();
 
-			hideWidget();
+			//hideWidget();
 		}
 
 		// Draw status button
@@ -178,13 +180,13 @@
 			jQuery.ajax(ajaxReq);
 
 			// Show the widget
-			showWidget();
+			//showWidget();
 		} else {
 			// Set the widget content to blank
 			widget.w.empty();
 
 			// Hide the widget
-			hideWidget();
+			//hideWidget();
 		}
 	}
 
