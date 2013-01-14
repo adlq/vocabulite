@@ -128,7 +128,7 @@
 			console.log( "Widget Width = " + widget.w.width() + ", Height = " + widget.w.height() );
 			widget.outerHeight = widget.w.outerHeight();
 			widget.outerWidth = widget.w.outerWidth();
-			console.log( "Widget outerWidth = " + widget.w.outerWidth + ", outerHeight = " + widget.w.outerHeight );
+			console.log( "Widget outerWidth = " + widget.outerWidth + ", outerHeight = " + widget.outerHeight );
 			console.log( "=========drawWidget END==============" );
 
 			//hideWidget();
@@ -169,7 +169,7 @@
 			console.log( "=======Mouseup START=======" );
 			console.log( "Padding = " + widget.padding );
 			console.log( "Widget width = " + widget.w.width() + ", height = " + widget.w.height() );
-			console.log( "Widget outerWidth = " + widget.w.outerWidth + ", outerHeight = " + widget.w.outerHeight );
+			console.log( "Widget outerWidth = " + widget.outerWidth + ", outerHeight = " + widget.outerHeight );
 			
 			widget.x = ( window.innerWidth + scrollLeft - event.pageX - widget.outerWidth < 0 ?
 					Math.max( event.pageX - widget.outerWidth, scrollLeft ) : event.pageX );
