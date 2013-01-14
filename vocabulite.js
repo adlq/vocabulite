@@ -120,14 +120,16 @@
 			// hide() and show() but we chose to implement them 
 			// by changing CSS property "visibility" because 
 			// apparently it causes less bug (?)
+			console.log( "=========drawWidget START============" );		
 			widget.padding = parseInt( widget.w.css( 'padding-top' ).replace( 'px', '' ), 10 );
-			console.log( "Padding = " + widget.padding );
+			console.log( "Widget Padding = " + widget.padding );
 			widget.outerHeight = widget.w.height() + widget.padding;
 			widget.outerWidth = widget.w.width() + widget.padding;
-			console.log( "Width = " + widget.w.width() + ", Height = " + widget.w.height() );
+			console.log( "Widget Width = " + widget.w.width() + ", Height = " + widget.w.height() );
 			widget.outerHeight = widget.w.outerHeight();
 			widget.outerWidth = widget.w.outerWidth();
-			console.log( "outerWidth = " + widget.w.outerWidth() + ", outerHeight = " + widget.w.outerHeight() );
+			console.log( "Widget outerWidth = " + widget.w.outerWidth + ", outerHeight = " + widget.w.outerHeight );
+			console.log( "=========drawWidget END==============" );
 
 			//hideWidget();
 			widget.w.hide();
@@ -164,10 +166,10 @@
 			console.log( "wouterHeight = " + widget.outerHeight );
 			console.log( "wouterWidth = " + widget.outerWidth );
 			*/
-			console.log( "innerWidth = " + window.innerWidth );
+			console.log( "=======Mouseup START=======" );
 			console.log( "Padding = " + widget.padding );
-			console.log( "Width = " + widget.w.width() + ", Height = " + widget.w.height() );
-			console.log( "outerWidth = " + widget.w.outerWidth() + ", outerHeight = " + widget.w.outerHeight() );
+			console.log( "Widget width = " + widget.w.width() + ", height = " + widget.w.height() );
+			console.log( "Widget outerWidth = " + widget.w.outerWidth + ", outerHeight = " + widget.w.outerHeight );
 			
 			widget.x = ( window.innerWidth + scrollLeft - event.pageX - widget.outerWidth < 0 ?
 					Math.max( event.pageX - widget.outerWidth, scrollLeft ) : event.pageX );
@@ -176,7 +178,7 @@
 			
 			console.log( "wx = " + widget.x );
 			console.log( "wy = " + widget.y );
-		
+			console.log( "=======Mouseup END=======" );
 			
 			widget.w.css( {
 				'left': widget.x + 'px',
